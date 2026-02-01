@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Heart, Stethoscope, Activity } from "lucide-react";
-import { supabase } from "../lib/supabase"; // ✅ Import statically
+import { supabase } from "../lib/supabase"; 
 
-// ✅ Validation helpers
+
 const validateName = (name: string) => {
   const namePattern = /^Dr\.\s[A-Za-z]+(\s[A-Za-z]+)*$/;
   return namePattern.test(name)
@@ -61,7 +61,7 @@ export function Auth() {
     setErrors((prev) => ({ ...prev, password: validatePassword(value) }));
   };
 
-  // ✅ Submit handler
+ 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -93,21 +93,21 @@ export function Auth() {
     }
   }
 
-  // ✅ Supabase connectivity test
+  
   async function testSupabaseConnection() {
-    setDebugMsg("⏳ Testing connection...");
+    setDebugMsg(" Testing connection...");
     try {
       const { data, error } = await supabase.from("patients").select("id").limit(1);
 
       if (error) throw error;
-      setDebugMsg(`✅ Supabase reachable. Found ${data?.length ?? 0} rows in patients table.`);
+      setDebugMsg(` Supabase reachable. Found ${data?.length ?? 0} rows in patients table.`);
     } catch (err: any) {
-      setDebugMsg(`❌ Supabase test failed: ${err?.message}`);
+      setDebugMsg(` Supabase test failed: ${err?.message}`);
       console.error("Supabase connection test error:", err);
     }
   }
 
-  // ✅ Safe Tailwind color map (fixes dynamic color issue)
+  
   const colorMap: Record<string, string> = {
     cardiology: "red",
     oncology: "green",
