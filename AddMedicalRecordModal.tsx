@@ -9,9 +9,9 @@ type Props = {
 };
 
 export function AddMedicalRecordModal({ patientId, onClose }: Props) {
-  // ✅ Correct placement of user extraction
+  
   const { user } = useAuth();
-  console.log("🧑‍⚕️ Current Supabase user:", user);
+  console.log(" Current Supabase user:", user);
 
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
@@ -23,27 +23,26 @@ export function AddMedicalRecordModal({ patientId, onClose }: Props) {
     medical_history: "",
   });
 
-  // ✅ Handle text input
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  // ✅ Handle file selection
+ 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setFiles(Array.from(e.target.files));
   };
 
-  // ✅ Submit handler
+  
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
 
     try {
       if (!user) {
-        alert("⚠️ You must be logged in to add a medical record.");
+        alert(" You must be logged in to add a medical record.");
         setLoading(false);
         return;
       }
@@ -71,16 +70,16 @@ export function AddMedicalRecordModal({ patientId, onClose }: Props) {
       const { error } = await supabase.from("medical_records").insert({
         patient_id: patientId,
         ...formData,
-        file_url: uploadedFiles, // stores public URLs
-        created_by: user.id, // ✅ now properly defined
+        file_url: uploadedFiles,
+        created_by: user.id, 
       });
 
       if (error) throw error;
 
-      alert("✅ Medical record added successfully!");
+      alert(" Medical record added successfully!");
       onClose();
     } catch (error: any) {
-      console.error("❌ Error adding medical record:", error.message || error);
+      console.error(" Error adding medical record:", error.message || error);
       alert("Failed to add medical record: " + (error.message || "Unknown error"));
     } finally {
       setLoading(false);
@@ -193,7 +192,7 @@ export function AddMedicalRecordModal({ patientId, onClose }: Props) {
               />
             </label>
 
-            {/* ✅ View Selected Files Button */}
+            {/*  View Selected Files Button */}
             {files.length > 0 && (
               <button
                 type="button"
